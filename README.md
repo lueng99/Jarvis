@@ -24,7 +24,7 @@ pip install SpeechRecognition pyttsx3 wikipedia pywhatkit
 
 ## How to Use
 
-1. Execute the file `recognition.py` in your **Windows terminal**.
+1. Execute the file `main.py` in your **Windows terminal**.
    ⚠️ This project is not fully compatible with Linux and may have some issues.
 
 2. When it starts, it will display:
