@@ -21,6 +21,10 @@ You can install them using pip:
 ```bash
 pip install SpeechRecognition pyttsx3 wikipedia pywhatkit
 ```
+For linux you will also need: 
+```bash
+pip install pyaudio
+```
 
 ## How to Use
 
