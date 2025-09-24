@@ -37,11 +37,12 @@ def process_command(command):
 #any other command that the system doesnt understand it will drop it to an llm
     else:
         commandresume = command + " summarize it the most you can so it only has around 5 lines" #so it makes faster the thinking
-        speak("im working on that")
+        speak("I'm working on that")
         completion = client.chat.completions.create(model="HuggingFaceTB/SmolLM3-3B",messages=[{"role": "user", "content": commandresume}])
         full_response = completion.choices[0].message["content"]
         clean_response = re.sub(r"<think>.*?</think>\s*", "", full_response, flags=re.DOTALL)
         speak(clean_response)
+
 
 
 
