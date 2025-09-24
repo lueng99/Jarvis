@@ -11,7 +11,7 @@ client = InferenceClient(provider="hf-inference", api_key=API_TOKEN)
 
 
 def process_command(command):
-    
+    #searches in google anything you command
     if "search on google" in command or "google" in command:
         query = command
         for phrase in ["search on google", "search google for", "google"]:
@@ -19,22 +19,22 @@ def process_command(command):
         query = query.strip()
         speak(f"Searching Google for: {query}")
         pywhatkit.search(query)
-
+#plays in yt anything you command
     elif "play" in command:
         song = command.replace("play", "").strip()
         speak(f"Playing {song} on YouTube.")
         pywhatkit.playonyt(song)
-
+#exits and finalize the programm
     elif "goodbye" in command or "exit" in command:
         speak("Goodbye, sir.")
         exit()
-
+#tells the name of the creator
     elif "who am i" in command:
         speak("You are Álvaro Luengo, my creator")
-
+#Its always good to give thanks a machine
     elif "thank you" in command:
         speak("you're welcome")
-
+#any other command that the system doesnt understand it will drop it to an llm
     else:
         commandresume = command + " summarize it the most you can so it only has around 5 lines" #so it makes faster the thinking
         speak("im working on that")
@@ -42,6 +42,7 @@ def process_command(command):
         full_response = completion.choices[0].message["content"]
         clean_response = re.sub(r"<think>.*?</think>\s*", "", full_response, flags=re.DOTALL)
         speak(clean_response)
+
 
 
 
