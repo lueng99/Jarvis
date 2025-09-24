@@ -19,7 +19,7 @@ You will need to install the following libraries:
 You can install them using pip:
 
 ```bash
-pip install SpeechRecognition pyttsx3 wikipedia pywhatkit
+pip install SpeechRecognition pyttsx3 huggingface_hub pywhatkit
 ```
 For linux you will also need: 
 ```bash
