@@ -1,7 +1,14 @@
-import wikipedia
+
 import pywhatkit
 from audio import speak
 import os #for future modifications#
+from huggingface_hub import InferenceClient
+import re
+
+
+API_TOKEN = "INSERTE AQUI SU TOKEN"
+client = InferenceClient(provider="hf-inference", api_key=API_TOKEN)
+
 
 def process_command(command):
     
@@ -12,14 +19,6 @@ def process_command(command):
         query = query.strip()
         speak(f"Searching Google for: {query}")
         pywhatkit.search(query)
-
-    elif "wikipedia" in command:
-        query = command.replace("wikipedia", "").strip()
-        try:
-            summary = wikipedia.summary(query, sentences=2, auto_suggest=False, redirect=True)
-            speak(summary)
-        except:
-            speak("I couldn’t find anything on Wikipedia.")
 
     elif "play" in command:
         song = command.replace("play", "").strip()
@@ -37,6 +36,14 @@ def process_command(command):
         speak("you're welcome")
 
     else:
-        speak("Sorry, I didn’t understand that command.")
-        print(command)
+        commandresume = command + " summarize it the most you can so it only has around 5 lines" #so it makes faster the thinking
+        speak("im working on that")
+        completion = client.chat.completions.create(model="HuggingFaceTB/SmolLM3-3B",messages=[{"role": "user", "content": commandresume}])
+        full_response = completion.choices[0].message["content"]
+        clean_response = re.sub(r"<think>.*?</think>\s*", "", full_response, flags=re.DOTALL)
+        speak(clean_response)
+
+
+
+
 
