@@ -1,7 +1,7 @@
 # Jarvis
 
 My own version of the AI **Jarvis**, inspired by the fictional character Tony Stark (AKA Iron Man).
-Jarvis is also a university projects which has the ambition to be the first completly customizable virtual assistant, with custom commands, voices and lots of thigs that make you feel comfortable working with it
+Jarvis is also a personal projects which has the ambition to be the first completly customizable virtual assistant, with custom commands, voices and lots of thigs that make you feel comfortable working with it
 ## Requirements
 
 * Python 3
