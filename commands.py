@@ -6,8 +6,16 @@ from huggingface_hub import InferenceClient
 import re
 
 
-API_TOKEN = "INSERTE AQUI SU TOKEN"
-client = InferenceClient(provider="hf-inference", api_key=API_TOKEN)
+import google.generativeai as genai
+
+# 1. Configuration
+# Replace with your Google AI Studio API Key
+genai.configure(api_key="INSERTE AQUI SU TOKEN")
+
+# Initialize the model
+# 2. Initialize the Flash Model
+# 'gemini-1.5-flash' is optimized for speed and efficiency
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 
 def process_command(command):
@@ -35,13 +43,17 @@ def process_command(command):
     elif "thank you" in command:
         speak("you're welcome")
 #any other command that the system doesnt understand it will drop it to an llm
-    else:
-        commandresume = command + " summarize it the most you can so it only has around 5 lines" #so it makes faster the thinking
+    else: 
+            # Append instructions to keep it short
+        commandresume = command + " (Summarize the answer in 5 lines or less for a voice output)"
         speak("I'm working on that")
-        completion = client.chat.completions.create(model="HuggingFaceTB/SmolLM3-3B",messages=[{"role": "user", "content": commandresume}])
-        full_response = completion.choices[0].message["content"]
-        clean_response = re.sub(r"<think>.*?</think>\s*", "", full_response, flags=re.DOTALL)
-        speak(clean_response)
+        try:
+            response = model.generate_content(commandresume)
+            clean_response = response.tex
+            speak(clean_response)
+        except Exception as e:
+            print(f"Error: {e}")
+            speak("I lost the connection to the cloud.")
 
 
 
